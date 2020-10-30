@@ -1,5 +1,10 @@
 set(RUNTIME_OUTPUT_DIRECTORY tests)
 
-add_executable(ohc-matrix-multiplication-test ohc-matrix-multiplication-test.c)
-target_link_libraries(ohc-matrix-multiplication-test PUBLIC qc Matrix)
-add_test(NAME ohc-matrix-multiplication-test COMMAND ohc-matrix-multiplication-test)
+function(ohc_add_test target)
+    add_executable(${target} ${target}.c)
+    target_link_libraries(${target} PUBLIC qc Matrix)
+    add_test(NAME ${target} COMMAND ${target})
+endfunction()
+
+ohc_add_test(ohc-matrix-multiplication-test)
+ohc_add_test(ohc-matrix-to-string-test)
