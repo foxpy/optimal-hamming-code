@@ -2,9 +2,10 @@ set(RUNTIME_OUTPUT_DIRECTORY tests)
 
 function(ohc_add_test target)
     add_executable(${target} ${target}.c)
-    target_link_libraries(${target} PUBLIC qc Matrix)
+    target_link_libraries(${target} PUBLIC qc Matrix Hamming)
     add_test(NAME ${target} COMMAND ${target})
 endfunction()
 
 ohc_add_test(ohc-matrix-multiplication-test)
 ohc_add_test(ohc-matrix-to-string-test)
+ohc_add_test(ohc-hamming-H-test)

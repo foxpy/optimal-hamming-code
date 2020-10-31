@@ -3,6 +3,16 @@
 #include <stdio.h>
 #include <qc.h>
 #include "hamming.h"
+#include "matrix.h"
+
+static void demonstrate(size_t n, size_t k) {
+    printf("The best appropriate Hamming code is (%zu,%zu,3)\n", n, k);
+    bit** H = hamming_H(n, k);
+    char* H_str = matrix_to_string(H);
+    printf("Parity check matrix H:\n%s", H_str);
+    free(H_str);
+    matrix_free(H);
+}
 
 int main(int argc, char* argv[]) {
     size_t target_k;
@@ -27,7 +37,6 @@ int main(int argc, char* argv[]) {
         ++s;
         hamming_parameters(s, &n, &k);
     }
-    printf("The best appropriate canonical Hamming code is (%zu,%zu,3)\n", n, k);
-    printf("The best appropriate Hamming code is (%zu,%zu,3)\n", n-k+target_k, target_k);
+    demonstrate(n - k + target_k, target_k);
     qc_args_free(args);
 }
