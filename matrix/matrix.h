@@ -1,5 +1,7 @@
 #pragma once
 #include <stddef.h>
+#include <qc.h>
+
 typedef _Bool bit;
 
 #define MATRIX_SIZE_M(matrix) (((size_t*)(matrix))[-2])
@@ -10,3 +12,4 @@ void matrix_free(bit** matrix);
 void matrix_fill_random(bit** matrix);
 bit** matrix_multiply(bit *const* A, bit *const* B);
 char* matrix_to_string(bit *const* matrix);
+size_t* matrix_to_systematic(bit** matrix, qc_err* err);
