@@ -2,7 +2,7 @@
 #include "matrix.h"
 
 char* matrix_to_string(bit *const* matrix) {
-    size_t alloc_size = 2 * (MATRIX_SIZE_M(matrix) * MATRIX_SIZE_N(matrix) - 1)
+    size_t alloc_size = 2 * (MATRIX_SIZE_M(matrix) * MATRIX_SIZE_N(matrix) - 1) + 1
                         + MATRIX_SIZE_M(matrix)
                         + 1;
     char* ret = emalloc(alloc_size);
