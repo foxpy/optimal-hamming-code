@@ -8,10 +8,15 @@
 static void demonstrate(size_t n, size_t k) {
     printf("The best appropriate Hamming code is (%zu,%zu,3)\n", n, k);
     bit** H = hamming_H(n, k);
+    bit** G = hamming_G(H);
     char* H_str = matrix_to_string(H);
+    char* G_str = matrix_to_string(G);
+    printf("Generator matrix G:\n%s", G_str);
     printf("Parity check matrix H:\n%s", H_str);
     free(H_str);
+    free(G_str);
     matrix_free(H);
+    matrix_free(G);
 }
 
 int main(int argc, char* argv[]) {

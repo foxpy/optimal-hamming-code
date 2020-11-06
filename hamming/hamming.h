@@ -4,3 +4,4 @@
 
 void hamming_parameters(size_t s, size_t* n, size_t* k);
 bit** hamming_H(size_t n, size_t k);
+bit** hamming_G(bit *const* H);
