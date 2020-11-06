@@ -19,14 +19,6 @@ static ptrdiff_t find_systematic_column(bit *const* matrix, size_t num) {
     return -1;
 }
 
-static void swap_columns(bit *const* matrix, size_t a, size_t b) {
-    for (size_t i = 0; i < MATRIX_SIZE_M(matrix); ++i) {
-        bit tmp = matrix[i][a];
-        matrix[i][a] = matrix[i][b];
-        matrix[i][b] = tmp;
-    }
-}
-
 size_t* matrix_to_systematic(bit** matrix) {
     assert(MATRIX_SIZE_N(matrix) > MATRIX_SIZE_M(matrix));
     size_t* permutation = emalloc(MATRIX_SIZE_N(matrix) * sizeof(size_t));
@@ -37,7 +29,7 @@ size_t* matrix_to_systematic(bit** matrix) {
     for (size_t i = 0; i < MATRIX_SIZE_M(matrix); ++i) {
         ptrdiff_t sys_index = find_systematic_column(matrix, i);
         assert(sys_index != -1);
-        swap_columns(matrix, sys_index, tail);
+        matrix_swap_columns(matrix, sys_index, tail);
         size_t tmp = permutation[sys_index];
         permutation[sys_index] = tail;
         permutation[tail] = tmp;

@@ -14,3 +14,5 @@ bit** matrix_multiply(bit *const* A, bit *const* B);
 char* matrix_to_string(bit *const* matrix);
 size_t* matrix_to_systematic(bit** matrix);
 bit** matrix_transpose(bit** matrix);
+void matrix_swap_columns(bit** matrix, size_t a, size_t b);
+void matrix_swap_rows(bit** matrix, size_t a, size_t b);
