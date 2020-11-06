@@ -5,18 +5,55 @@
 #include "hamming.h"
 #include "matrix.h"
 
+static void print_transposed(bit *const* mat) {
+    bit** transposed = matrix_transpose(matrix_clone(mat));
+    char* str = matrix_to_string(transposed);
+    printf("%s", str);
+    free(str);
+    matrix_free(transposed);
+}
+
+static size_t add_error(bit** vector) {
+    size_t len = MATRIX_SIZE_M(vector);
+    qc_rnd rnd;
+    qc_rnd_init(&rnd);
+    size_t error_position = qc_rnd_range64(&rnd, 0, len - 1);
+    vector[error_position][0] ^= 1u;
+    return error_position;
+}
+
 static void demonstrate(size_t n, size_t k) {
     printf("The best appropriate Hamming code is (%zu,%zu,3)\n", n, k);
+
     bit** H = hamming_H(n, k);
-    bit** G = hamming_G(H);
     char* H_str = matrix_to_string(H);
+    bit** G = hamming_G(H);
     char* G_str = matrix_to_string(G);
     printf("Generator matrix G:\n%s", G_str);
     printf("Parity check matrix H:\n%s", H_str);
+
+    bit** I = matrix_new(k, 1);
+    matrix_fill_random(I);
+    bit** C = matrix_multiply(G, I);
+    fputs("Random information vector I: ", stdout);
+    print_transposed(I);
+    fputs("Encoded message C: ", stdout);
+    print_transposed(C);
+
+    size_t error_position = add_error(C);
+    printf("Adding error at %zu: ", error_position + 1);
+    print_transposed(C);
+    bit** S = matrix_multiply(H, C);
+    fputs("Syndrome S: ", stdout);
+    print_transposed(S);
+
     free(H_str);
     free(G_str);
     matrix_free(H);
     matrix_free(G);
+    matrix_free(I);
+    matrix_free(C);
+    matrix_free(S);
 }
 
 int main(int argc, char* argv[]) {
