@@ -14,3 +14,4 @@ void matrix_fill_random(bit** matrix);
 bit** matrix_multiply(bit *const* A, bit *const* B);
 char* matrix_to_string(bit *const* matrix);
 size_t* matrix_to_systematic(bit** matrix, qc_err* err);
+bit** matrix_transpose(bit** matrix);
