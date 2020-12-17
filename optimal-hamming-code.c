@@ -22,6 +22,20 @@ static size_t add_error(bit** vector) {
     return error_position;
 }
 
+static void fix_error(bit** vector, size_t position) {
+    vector[position - 1][0] ^= 1u;
+}
+
+static size_t syndrome_to_error_position(bit *const* S) {
+    assert(MATRIX_SIZE_N(S) == 1);
+    size_t ret = 0;
+    for (size_t i = 0; i < MATRIX_SIZE_M(S); ++i) {
+        ret <<= 1;
+        ret += S[i][0];
+    }
+    return ret;
+}
+
 static void demonstrate(size_t n, size_t k) {
     printf("The best appropriate Hamming code is (%zu,%zu,3)\n", n, k);
 
@@ -46,6 +60,12 @@ static void demonstrate(size_t n, size_t k) {
     bit** S = matrix_multiply(H, C);
     fputs("Syndrome S: ", stdout);
     print_transposed(S);
+
+    size_t detected_error_position = syndrome_to_error_position(S);
+    printf("Syndrome states the error takes place as %zu\n", detected_error_position);
+    fix_error(C, detected_error_position);
+    printf("Fixed error at %zu: ", detected_error_position);
+    print_transposed(C);
 
     free(H_str);
     free(G_str);
