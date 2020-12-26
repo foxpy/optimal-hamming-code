@@ -11,9 +11,8 @@ static void assert_matrix_zero(bit *const* mat) {
     }
 }
 
-static void iteration(size_t s) {
-    size_t n, k;
-    hamming_parameters(s, &n, &k);
+static void iteration(size_t k) {
+    size_t n = hamming_n(k);
     bit** H = hamming_H(n, k);
     bit** G = hamming_G(H);
     bit** I = matrix_new(k, 1);
@@ -31,7 +30,7 @@ static void iteration(size_t s) {
 int main() {
     qc_rnd rnd;
     qc_rnd_init(&rnd);
-    for (size_t i = 0; i < 50; ++i) {
-        iteration(qc_rnd_range64(&rnd, 3, 8));
-    }
+    iteration(4);
+    iteration(11);
+    iteration(26);
 }

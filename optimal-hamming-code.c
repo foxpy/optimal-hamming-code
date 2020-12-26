@@ -22,20 +22,6 @@ static size_t add_error(bit** vector) {
     return error_position;
 }
 
-static void fix_error(bit** vector, size_t position) {
-    vector[position - 1][0] ^= 1u;
-}
-
-static size_t syndrome_to_error_position(bit *const* S) {
-    assert(MATRIX_SIZE_N(S) == 1);
-    size_t ret = 0;
-    for (size_t i = 0; i < MATRIX_SIZE_M(S); ++i) {
-        ret <<= 1;
-        ret += S[i][0];
-    }
-    return ret;
-}
-
 static void demonstrate(size_t n, size_t k) {
     printf("The best appropriate Hamming code is (%zu,%zu,3)\n", n, k);
 
@@ -61,12 +47,6 @@ static void demonstrate(size_t n, size_t k) {
     fputs("Syndrome S: ", stdout);
     print_transposed(S);
 
-    size_t detected_error_position = syndrome_to_error_position(S);
-    printf("Syndrome states the error takes place as %zu\n", detected_error_position);
-    fix_error(C, detected_error_position);
-    printf("Fixed error at %zu: ", detected_error_position);
-    print_transposed(C);
-
     free(H_str);
     free(G_str);
     matrix_free(H);
@@ -82,7 +62,7 @@ int main(int argc, char* argv[]) {
     qc_args_brief(args,
             "Find the most optimal Hamming code with specified information\n"
             "vector bit length, also generate appropriate matrices G and H\n");
-    qc_args_unsigned_default(args, "k", 4, &k, "information vector bits");
+    qc_args_unsigned_default(args, "k", 4, &k, "information vector bits, >= 4");
     char* err;
     if (!qc_args_parse(args, argc, argv, &err)) {
         fprintf(stderr, "Failed to parse arguments: %s\n", err);
@@ -90,8 +70,8 @@ int main(int argc, char* argv[]) {
         qc_args_free(args);
         exit(EXIT_FAILURE);
     }
-    if (k == 0) {
-        fputs("k is expected to be positive\n", stderr);
+    if (k < 4) {
+        fputs("k should be greater or equal to 4\n", stderr);
         exit(EXIT_FAILURE);
     }
     size_t n = hamming_n(k);
