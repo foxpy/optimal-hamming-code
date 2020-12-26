@@ -62,18 +62,13 @@ static void demonstrate(size_t n, size_t k) {
     print_transposed(S);
 
     size_t detected_error_position = syndrome_to_error_position(S);
-    printf("Syndrome states the error takes place at %zu\n", detected_error_position);
+    printf("Syndrome states the error takes place as %zu\n", detected_error_position);
     fix_error(C, detected_error_position);
     printf("Fixed error at %zu: ", detected_error_position);
     print_transposed(C);
 
-    bit** D = hamming_decode(C, G);
-    fputs("Decoded message: ", stdout);
-    print_transposed(D);
-
     free(H_str);
     free(G_str);
-    matrix_free(D);
     matrix_free(H);
     matrix_free(G);
     matrix_free(I);
