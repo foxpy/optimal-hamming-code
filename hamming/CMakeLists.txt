@@ -1,5 +1,5 @@
 add_library(Hamming
-    hamming_parameters.c
+    hamming_n.c
     hamming_H.c
     hamming_G.c
     hamming_decode.c
