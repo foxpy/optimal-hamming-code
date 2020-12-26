@@ -46,9 +46,6 @@ Random information vector I: 1 1 0 0
 Encoded message C: 1 0 0 0 0 1 1
 Adding error at 7: 1 0 0 0 0 1 0
 Syndrome S: 1 1 1
-Syndrome states the error takes place at 7
-Fixed error at 7: 1 0 0 0 0 1 1
-Decoded message: 1 1 0 0
 ;
 ; ./optimal-hamming-code --k=11
 The best appropriate Hamming code is (15,11,3)
@@ -77,8 +74,5 @@ Random information vector I: 0 0 1 1 1 1 1 1 0 1 0
 Encoded message C: 0 0 1 1 1 1 1 1 0 1 0 1 1 0 0
 Adding error at 15: 0 0 1 1 1 1 1 1 0 1 0 1 1 0 1
 Syndrome S: 1 1 1 1
-Syndrome states the error takes place at 15
-Fixed error at 15: 0 0 1 1 1 1 1 1 0 1 0 1 1 0 0
-Decoded message: 0 0 1 1 1 1 1 1 0 1 0
 ;
 ```
