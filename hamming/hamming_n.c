@@ -16,7 +16,7 @@ static void hamming_parameters(size_t s, size_t *n, size_t *k) {
 }
 
 size_t hamming_n(size_t target_k) {
-    assert(target_k >= 4);
+    assert(target_k != 0);
     size_t s = 0, n = 0, k = 0;
     while (k < target_k) {
         ++s;

@@ -8,6 +8,9 @@ static void check(size_t expected_n, size_t k) {
 }
 
 int main() {
+    check(3, 1);
+    check(5, 2);
+    check(6, 3);
     check(7, 4);
     check(9, 5);
     check(10, 6);

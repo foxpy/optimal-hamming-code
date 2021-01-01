@@ -70,11 +70,11 @@ int main(int argc, char* argv[]) {
         qc_args_free(args);
         exit(EXIT_FAILURE);
     }
-    if (k < 4) {
-        fputs("k should be greater or equal to 4\n", stderr);
+    if (k == 0) {
+        fputs("k should not be zero\n", stderr);
         exit(EXIT_FAILURE);
+    } else {
+        demonstrate(hamming_n(k), k);
     }
-    size_t n = hamming_n(k);
-    demonstrate(n, k);
     qc_args_free(args);
 }
