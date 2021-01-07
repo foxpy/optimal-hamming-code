@@ -11,12 +11,12 @@ static void errorless() {
     bit** C = matrix_multiply(G, I);
     char const* C_str_expected = "1\n1\n0\n0\n1\n1\n0\n";
     char* C_str_actual = matrix_to_string(C);
-    qc_assert_format(strcmp(C_str_expected, C_str_actual) == 0,
+    qc_assert(strcmp(C_str_expected, C_str_actual) == 0,
                      "Expected: \"%s\", got: \"%s\"", C_str_expected, C_str_actual);
     bit** S = matrix_multiply(H, C);
     char const* S_str_expected = "0\n0\n0\n";
     char* S_str_actual = matrix_to_string(S);
-    qc_assert_format(strcmp(S_str_expected, S_str_actual) == 0,
+    qc_assert(strcmp(S_str_expected, S_str_actual) == 0,
                      "Expected: \"%s\", got: \"%s\"", S_str_expected, S_str_actual);
     free(S_str_actual);
     free(C_str_actual);
@@ -37,7 +37,7 @@ static void error() {
     bit** S = matrix_multiply(H, C);
     char const* S_str_expected = "1\n1\n0\n";
     char* S_str_actual = matrix_to_string(S);
-    qc_assert_format(strcmp(S_str_expected, S_str_actual) == 0,
+    qc_assert(strcmp(S_str_expected, S_str_actual) == 0,
                      "Expected: \"%s\", got: \"%s\"", S_str_expected, S_str_actual);
     free(S_str_actual);
     matrix_free(S);

@@ -9,7 +9,7 @@ int main() {
     mat[2][0] = 0; mat[2][1] = 1; mat[2][2] = 0; mat[2][3] = 1;
     char const* expected = "0 0 1 0\n1 1 0 0\n0 1 0 1\n";
     char* formatted = matrix_to_string(mat);
-    qc_assert_format(strcmp(formatted, expected) == 0, "Expected: %s, got: %s", expected, formatted);
+    qc_assert(strcmp(formatted, expected) == 0, "Expected: %s, got: %s", expected, formatted);
     free(formatted);
     matrix_free(mat);
 }

@@ -21,7 +21,7 @@ static ptrdiff_t find_systematic_column(bit *const* matrix, size_t num) {
 
 size_t* matrix_to_systematic(bit** matrix) {
     assert(MATRIX_SIZE_N(matrix) > MATRIX_SIZE_M(matrix));
-    size_t* permutation = emalloc(MATRIX_SIZE_N(matrix) * sizeof(size_t));
+    size_t* permutation = qc_malloc(MATRIX_SIZE_N(matrix) * sizeof(size_t));
     for (size_t i = 0; i < MATRIX_SIZE_N(matrix); ++i) {
         permutation[i] = i;
     }

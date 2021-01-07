@@ -33,20 +33,17 @@ static bit** populate_matrix_B() {
 }
 
 static bool check_matrix_C(bit *const* C) {
-    qc_assert_format(MATRIX_SIZE_M(C) == 3 && MATRIX_SIZE_N(C) == 2,
+    qc_assert(MATRIX_SIZE_M(C) == 3 && MATRIX_SIZE_N(C) == 2,
                      "Expected matrix size 3 x 2, got %zu x %zu", MATRIX_SIZE_M(C), MATRIX_SIZE_N(C));
-    char* fail_message = sprintf_alloc(
-            "Expected matrix 0,0,0,1,1,1, got matrix %c,%c,%c,%c,%c,%c",
-            C[0][0] ? '1' : '0', C[0][1] ? '1' : '0',
-            C[1][0] ? '1' : '0', C[1][1] ? '1' : '0',
-            C[2][0] ? '1' : '0', C[2][1] ? '1' : '0'
-    );
-    qc_assert(C[0][0] == 0, fail_message);
-    qc_assert(C[0][1] == 0, fail_message);
-    qc_assert(C[1][0] == 0, fail_message);
-    qc_assert(C[1][1] == 1, fail_message);
-    qc_assert(C[2][0] == 1, fail_message);
-    qc_assert(C[2][1] == 1, fail_message);
+    char* fail_message;
+    qc_asprintf(&fail_message, "Expected matrix 0,0,0,1,1,1, got matrix %c,%c,%c,%c,%c,%c",
+                 C[0][0] ? '1' : '0', C[0][1] ? '1' : '0',
+                 C[1][0] ? '1' : '0', C[1][1] ? '1' : '0',
+                 C[2][0] ? '1' : '0', C[2][1] ? '1' : '0');
+    qc_assert(C[0][0] == 0 && C[0][1] == 0 &&
+              C[1][0] == 0 && C[1][1] == 1 &&
+              C[2][0] == 1 && C[2][1] == 1,
+              "%s", fail_message);
     free(fail_message);
     return false;
 }

@@ -13,7 +13,7 @@ static void test1() {
     mat = matrix_transpose(mat);
     char const* expected = "0 0 1 0\n1 0 1 0\n";
     char* actual = matrix_to_string(mat);
-    qc_assert_format(strcmp(expected, actual) == 0, "Expected: \"%s\", got: \"%s\"", expected, actual);
+    qc_assert(strcmp(expected, actual) == 0, "Expected: \"%s\", got: \"%s\"", expected, actual);
     free(actual);
     matrix_free(mat);
 }
@@ -25,7 +25,7 @@ static  void iteration(size_t m, size_t n) {
     bit ** transposed_twice = matrix_transpose(transposed);
     char* original_str = matrix_to_string(original);
     char* transposed_twice_str = matrix_to_string(transposed_twice);
-    qc_assert_format(strcmp(original_str, transposed_twice_str) == 0,
+    qc_assert(strcmp(original_str, transposed_twice_str) == 0,
                      "Expected: \"%s\", got: \"%s\"", original_str, transposed_twice_str);
     free(original_str);
     free(transposed_twice_str);

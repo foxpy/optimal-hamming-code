@@ -29,7 +29,7 @@ static void iteration(size_t k) {
 
 int main() {
     qc_rnd rnd;
-    qc_rnd_init(&rnd);
+    qc_rnd_init(&rnd, NULL);
     iteration(4);
     iteration(11);
     iteration(26);

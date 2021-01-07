@@ -4,7 +4,7 @@
 
 static void check(size_t expected_n, size_t k) {
     size_t actual_n = hamming_n(k);
-    qc_assert_format(expected_n == actual_n, "Expected: %zu, got: %zu", expected_n, actual_n);
+    qc_assert(expected_n == actual_n, "Expected: %zu, got: %zu", expected_n, actual_n);
 }
 
 int main() {

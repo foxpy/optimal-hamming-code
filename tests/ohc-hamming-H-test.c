@@ -5,7 +5,7 @@
 
 static void compare_matrix(bit *const* matrix, char const* str) {
     char* actual_value = matrix_to_string(matrix);
-    qc_assert_format(strcmp(actual_value, str) == 0, "Expected: \"%s\", got: \"%s\"", str, actual_value);
+    qc_assert(strcmp(actual_value, str) == 0, "Expected: \"%s\", got: \"%s\"", str, actual_value);
     free(actual_value);
 }
 

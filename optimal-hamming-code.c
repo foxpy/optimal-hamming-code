@@ -16,7 +16,7 @@ static void print_transposed(bit *const* mat) {
 static size_t add_error(bit** vector) {
     size_t len = MATRIX_SIZE_M(vector);
     qc_rnd rnd;
-    qc_rnd_init(&rnd);
+    qc_rnd_init(&rnd, NULL);
     size_t error_position = qc_rnd_range64(&rnd, 0, len - 1);
     vector[error_position][0] ^= 1u;
     return error_position;
@@ -59,18 +59,14 @@ static void demonstrate(size_t n, size_t k) {
 int main(int argc, char* argv[]) {
     size_t k;
     qc_args* args = qc_args_new();
-    qc_args_brief(args,
+    qc_args_set_brief(args,
             "Find the most optimal Hamming code with specified information\n"
             "vector bit length, also generate appropriate matrices G and H\n");
     qc_args_unsigned_default(args, "k", 4, &k, "information vector bits, >= 4");
-    char* err;
-    if (!qc_args_parse(args, argc, argv, &err)) {
-        fprintf(stderr, "Failed to parse arguments: %s\n", err);
-        free(err);
-        qc_args_free(args);
-        exit(EXIT_FAILURE);
-    }
-    if (k == 0) {
+    qc_err* err = qc_err_new();
+    if (!qc_args_parse(args, argc, argv, err)) {
+        qc_err_fatal(err, "Failed to parse arguments");
+    } else if (k == 0) {
         fputs("k should not be zero\n", stderr);
         exit(EXIT_FAILURE);
     } else {
